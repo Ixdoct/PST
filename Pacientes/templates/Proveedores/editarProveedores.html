@@ -1,0 +1,33 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de Proveedores {% endblock %}
+
+{% block body%}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+
+    <h2> Gestion de Proveedores </h2>   
+        <div class="card">
+            <div class="card-body"> 
+            <form action="/edicionProveedores/" method="POST">{% csrf_token %}
+                <div class="form-group">
+                    <input type="text" id="txtCedula" name="txtCedula" value="{{proveedores.cedula}}" class="form-control" placeholder="Cédula"
+                            minlength="8" maxlength="10" readonly required> 
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtNombre" name="txtNombre" value="{{proveedores.nombre}}" class="form-control" placeholder="Nombre"
+                    maxlength="35" required>  
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtApellido" name="txtApellido" value="{{proveedores.apellido}}" class="form-control" placeholder="Apellido"
+                    maxlength="35" required>  
+                </div>
+                <div class="form-group">
+                    <input type="text" id="txtCiudad" name="txtCiudad" value="{{proveedores.ciudad}}" class="form-control" placeholder="Ciudad"
+                    minlength="1" maxlength="35" required>  
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block text-white">Editar</button>
+                </div>
+    </div>
+{% endblock %}

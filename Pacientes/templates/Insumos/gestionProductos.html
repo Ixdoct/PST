@@ -1,0 +1,76 @@
+{% extends "./base.html" %}
+
+{% block title %} Gestion de Pacientes {% endblock %}
+
+{% block body%}
+<div class="row">
+<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+</div>
+    {% endfor %}
+    {% endif %}
+    <h2> Gestion de Productos </h2>   
+        <div class="card">
+            <div class="card-body">
+            <form action="/registrarProductos/" method="POST">{% csrf_token %}
+                <div class="form-group">
+                        <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Código"
+                            minlength="6" maxlength="6" required>
+                </div>
+                <div class="form-group">
+                        <input type="text" id="txtProveedor" name="txtProveedor" class="form-control" placeholder="Proveedor"
+                    maxlength="35" required>
+                </div>
+                <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"
+                        maxlength="35" required>
+                </div>
+                    <div class="form-group">
+                        <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="Cantidad"
+                        maxlength="35" required>
+                </div>
+                <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+            <h1>Listado de Productos</h1>
+                    <div class="table-responsive py-2">
+                        <table class="table table-striped">
+                        <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Proveedor</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in Productos %}
+                        <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{c.codigo}}</td>
+                        <td>{{c.proveedor}}</td>
+                        <td>{{c.nombrep}}</td>
+                        <td>{{c.cantidad}}</td>
+                        <td><a href="editarProductos/{{c.codigo}}" class="btn btn-info">Editar</a></td> 
+                        <td><a href="eliminarProductos/{{c.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> 
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+    </div>
+
+</div>
+{% endblock %}
