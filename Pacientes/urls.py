@@ -12,6 +12,7 @@ urlpatterns = [
     
     ##Productos
     path('gestionProductos', views.listarProductos),
+    path('proveedor/', views.obtenerProveedores, name='obtenerProveedores'),
     path('registrarProductos/', views.registrarProductos),
     path('editarProductos/<codigo>', views.editarProductos),
     path('edicionProductos/', views.edicionProductos),
@@ -20,9 +21,9 @@ urlpatterns = [
     ##Proveedores
     path('gestionProveedores', views.listarProveedores),
     path('registrarProveedores/', views.registrarProveedores),
-    path('editarProveedores/<cedula>', views.editarProveedores),
+    path('editarProveedores/<cedula_prov>', views.editarProveedores),
     path('edicionProveedores/', views.edicionProveedores),
-    path('eliminarProveedores/<cedula>', views.eliminarProveedores),
+    path('eliminarProveedores/<cedula_prov>', views.eliminarProveedores),
 ]
     
 

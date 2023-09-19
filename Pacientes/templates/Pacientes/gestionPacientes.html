@@ -29,9 +29,27 @@
                         <input type="text" id="txtApellido" name="txtApellido" class="form-control" placeholder="Apellido"
                         maxlength="35" required>
                   </div>
-                     <div class="form-group">
+                  <div class="form-group">
                         <input type="text" id="txtEdad" name="txtEdad" class="form-control" placeholder="Edad"
+                        maxlength="2" required>
+                  </div>
+                  <div class="form-group">
+                        <select id="txtSexo" name="txtSexo" class="form-select" aria-label="Sexo" required>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                  </select>
+                  </div>
+                  <div class="form-group">
+                        <input type="date" id="txtFechaNac" name="txtFechaNac" class="form-control" placeholder="Fecha de Nacimiento"
                            maxlength="35" required>
+                  </div>
+                  <div class="form-group">
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" placeholder="Dirección"
+                           maxlength="35" required>
+                  </div>
+                  <div class="form-group">
+                        <input type="text" id="txtLugarNac" name="txtLugarNac" class="form-control" placeholder="Lugar de Nacimiento"
+                           maxlength="35" required>         
                   </div>
                   <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
@@ -43,6 +61,10 @@
 
             <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
                <h1>Listado de Pacientes</h1>
+            <form class="d-flex" method="GET">{% csrf_token %}
+                  <input class="form-control me-2" type="search" placeholder="" name="buscar" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
                      <div class="table-responsive py-2">
                         <table class="table table-striped">
                            <thead>
@@ -51,6 +73,10 @@
                            <th>Nombre</th>
                            <th>Apellido</th>
                            <th>Edad</th>
+                           <th>Sexo</th>
+                           <th>Fecha de Nacimiento</th>
+                           <th>Dirección</th>
+                           <th>Lugar de Nacimiento</th>
                            <th colspan="3">Opciones</th>
                               </tr>
                         </thead>
@@ -61,6 +87,10 @@
                         <td>{{c.nombre}}</td>
                         <td>{{c.apellido}}</td>
                         <td>{{c.edad}}</td>
+                        <td>{{c.sexo}}</td>
+                        <td>{{c.fechaNac}}</td>
+                        <td>{{c.direccion}}</td>
+                        <td>{{c.lugarNac}}</td>
                         <td><a href="editarPacientes/{{c.cedula}}" class="btn btn-info">Editar</a></td> 
                         <td><a href="eliminarPacientes/{{c.cedula}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> 
                         <td><a href="/{{c.cedula}}" class="btn btn-warning">Examen</a></td> 

@@ -18,19 +18,27 @@
             <div class="card-body">
             <form action="/registrarProveedores/" method="POST">{% csrf_token %}
                 <div class="form-group">
-                        <input type="text" id="txtCedula" name="txtCedula" class="form-control" placeholder="Cédula"
+                        <input type="text" id="txtCedulaProv" name="txtCedulaProv" class="form-control" placeholder="Cédula"
                             minlength="8" maxlength="10" required>
                 </div>
                 <div class="form-group">
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"
+                        <input type="text" id="txtRifProv" name="txtRifProv" class="form-control" placeholder="RIF"
+                        maxlength="20" required>
+                </div>
+                <div class="form-group">
+                        <input type="text" id="txtNombreProv" name="txtNombreProv" class="form-control" placeholder="Nombre"
                     maxlength="35" required>
                 </div>
                 <div class="form-group">
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" placeholder="Apellido"
+                        <input type="text" id="txtApellidoProv" name="txtApellidoProv" class="form-control" placeholder="Apellido"
                         maxlength="35" required>
                 </div>
                     <div class="form-group">
-                        <input type="text" id="txtCiudad" name="txtCiudad" class="form-control" placeholder="Ciudad"
+                        <input type="text" id="txtDireccionProv" name="txtDireccionProv" class="form-control" placeholder="Dirección"
+                        maxlength="35" required>
+                </div>
+                <div class="form-group">
+                        <input type="text" id="txtTelefonoProv" name="txtTelefonoProv" class="form-control" placeholder="Teléfono"
                         maxlength="35" required>
                 </div>
                 <div class="form-group">
@@ -43,15 +51,22 @@
 
             <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
             <h1>Listado de Proveedores</h1>
+            <form class="d-flex" method="GET">{% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="" name="buscar" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
                     <div class="table-responsive py-2">
                         <table class="table table-striped">
                         <thead>
                         <tr>
                         <th>#</th>
                         <th>Cédula</th>
+                        <th>RIF</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Ciudad</th>
+                        <th>Direccion</th>
+                        <th>Teléfono</th>
+
                         <th colspan="2">Opciones</th>
                             </tr>
                         </thead>
@@ -59,12 +74,14 @@
                         {% for c in Proveedores %}
                         <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{c.cedula}}</td>
-                        <td>{{c.nombre}}</td>
-                        <td>{{c.apellido}}</td>
-                        <td>{{c.ciudad}}</td>
-                        <td><a href="editarProveedores/{{c.cedula}}" class="btn btn-info">Editar</a></td> 
-                        <td><a href="eliminarProveedores/{{c.cedula}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> 
+                        <td>{{c.cedula_prov}}</td>
+                        <td>{{c.rif}}</td>
+                        <td>{{c.nombre_prov}}</td>
+                        <td>{{c.apellido_prov}}</td>
+                        <td>{{c.direccion_prov}}</td>
+                        <td>{{c.telefono_prov}}</td>
+                        <td><a href="editarProveedores/{{c.cedula_prov}}" class="btn btn-info">Editar</a></td> 
+                        <td><a href="eliminarProveedores/{{c.cedula_prov}}" class="btn btn-danger btnEliminacion">Eliminar</a></td> 
                         </tr>
                         {% endfor %}
                         </tbody>
