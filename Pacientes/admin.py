@@ -2,18 +2,17 @@ from django.contrib import admin
 from .models import Pacientes, Proveedores, Productos, Examenes
 # Register your models here.
 
+@admin.register(Pacientes)
 class PacientesAdmin(admin.ModelAdmin):
+   # list_display = ('cedula', 'nombre', 'apellido')
     ordering = ['nombre']
 
-class ProveedoresAdmin(admin.ModelAdmin):
-    search_fields = ('cedula_prov'),
+@admin.register(Proveedores)
+class ProveedoresAdmin (admin.ModelAdmin):
+    #list_display = ('cedula_prov', 'nombre_prov', 'apellido_prov')
     ordering = ['nombre_prov']
 
-class ProductosAdmin(admin.ModelAdmin):
+@admin.register(Productos)
+class ProductosAdmin (admin.ModelAdmin):
+    #list_display = ('codigo', 'nombrep', 'cantidad')
     ordering = ['nombrep']
-    autocomplete_fields = ['proveedor']
-
-admin.site.register(Pacientes, PacientesAdmin)
-admin.site.register(Proveedores, ProveedoresAdmin)
-admin.site.register(Productos, ProductosAdmin)
-admin.site.register(Examenes)
