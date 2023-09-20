@@ -16,7 +16,7 @@
     <h2> Gestion de Proveedores </h2>   
         <div class="card">
             <div class="card-body">
-            <form action="/registrarProveedores/" method="POST">{% csrf_token %}
+            <form id="formularioProveedores" action="/registrarProveedores/" method="POST">{% csrf_token %}
                 <div class="form-group">
                         <input type="text" id="txtCedulaProv" name="txtCedulaProv" class="form-control" placeholder="Cédula"
                             minlength="8" maxlength="10" required>
@@ -27,11 +27,11 @@
                 </div>
                 <div class="form-group">
                         <input type="text" id="txtNombreProv" name="txtNombreProv" class="form-control" placeholder="Nombre"
-                    maxlength="35" required>
+                    maxlength="20" required>
                 </div>
                 <div class="form-group">
                         <input type="text" id="txtApellidoProv" name="txtApellidoProv" class="form-control" placeholder="Apellido"
-                        maxlength="35" required>
+                        maxlength="20" required>
                 </div>
                     <div class="form-group">
                         <input type="text" id="txtDireccionProv" name="txtDireccionProv" class="form-control" placeholder="Dirección"
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                         <input type="text" id="txtTelefonoProv" name="txtTelefonoProv" class="form-control" placeholder="Teléfono"
-                        maxlength="35" required>
+                        maxlength="20" required>
                 </div>
                 <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>

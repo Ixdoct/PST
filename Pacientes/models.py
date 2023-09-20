@@ -3,9 +3,9 @@ from django.db import models
 #Pacientes
 class Pacientes(models.Model):
     cedula = models.CharField(primary_key=True, max_length=10)
-    nombre = models.CharField(max_length=35)
-    apellido = models.CharField(max_length=35)
-    sexo=models.CharField(max_length=35)
+    nombre = models.CharField(max_length=20)
+    apellido = models.CharField(max_length=20)
+    sexo=models.CharField(max_length=10)
     edad = models.CharField(max_length=2)
     fechaNac = models.DateField(verbose_name='Fecha de Nacimiento')
     direccion = models.CharField(max_length=35)
@@ -25,10 +25,10 @@ class Meta:
 class Proveedores(models.Model):
     cedula_prov = models.CharField(primary_key=True, max_length=10)
     rif = models.CharField(max_length=30)
-    nombre_prov = models.CharField(max_length=35)
-    apellido_prov = models.CharField(max_length=35)
+    nombre_prov = models.CharField(max_length=20)
+    apellido_prov = models.CharField(max_length=20)
     direccion_prov = models.CharField(max_length=35)
-    telefono_prov = models.CharField(max_length=35)
+    telefono_prov = models.CharField(max_length=20)
     def __str__(self):
         texto = "{0} {1} ({2})"
         return texto.format(self.nombre_prov, self.apellido_prov, self.cedula_prov)
@@ -43,8 +43,8 @@ class Meta:
 class Productos(models.Model):
     codigo = models.CharField(primary_key=True, max_length=10)
     proveedor = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
-    nombrep = models.CharField(max_length=35)
-    cantidad = models.CharField(max_length=35)
+    nombrep = models.CharField(max_length=20)
+    cantidad = models.CharField(max_length=20)
     def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.nombrep, self.codigo)
@@ -58,7 +58,7 @@ class Meta:
 #Exámenes
 class Examenes(models.Model):
     id_examenes = models.CharField(primary_key=True, max_length=10)
-    nombre_examen = models.CharField(max_length=35)
+    nombre_examen = models.CharField(max_length=25)
     paciente = models.ForeignKey(Pacientes, null=True, blank=True, on_delete=models.CASCADE)
     producto = models.ForeignKey(Productos, null=True, blank=True, on_delete=models.CASCADE)
     def __str__(self):

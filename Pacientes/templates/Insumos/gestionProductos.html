@@ -16,7 +16,7 @@
     <h2> Gestion de Productos </h2>   
         <div class="card">
             <div class="card-body">
-            <form action="/registrarProductos/" method="POST">{% csrf_token %}
+            <form id="formularioProductos" action="/registrarProductos/" method="POST">{% csrf_token %}
                 <div class="form-group">
                         <input type="text" id="txtCodigo" name="txtCodigo" class="form-control" placeholder="Código"
                             minlength="8" maxlength="10" required>
@@ -30,12 +30,12 @@
 
                 <div class="form-group">
                         <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"
-                        maxlength="35" required>
+                        maxlength="20" required>
                 </div>
 
                 <div class="form-group">
                         <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="Cantidad"
-                        maxlength="35" required>
+                        maxlength="20" required>
                 </div>
 
                 <div class="form-group">
