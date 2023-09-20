@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
 
-
 # Create your views here.
 TEMPLATE_DIRS = {
     'os.path.join(BASE_DIR, "templates")'
@@ -12,6 +11,7 @@ TEMPLATE_DIRS = {
 #Inicio
 def index(request):
     return render(request, "index.html")
+
 #PACIENTES
 def listarPacientes(request):
     busqueda = request.GET.get("buscar")
@@ -78,9 +78,9 @@ def eliminarPacientes(request, cedula):
     messages.success(request, '¡Paciente Eliminado!')
     return redirect("http://127.0.0.1:8000/gestionPacientes")
 
-####PACIENTES
+###################################################################################################
 
-####PRODUCTOS
+##PRODUCTOS
 
 def listarProductos(request):
     busqueda = request.GET.get("buscar")
@@ -141,9 +141,9 @@ def eliminarProductos(request, codigo):
     messages.success(request, '¡Producto Eliminado!')
     return redirect("http://127.0.0.1:8000/gestionProductos")
 
-###PRODUCTOS
+##################################################################################################
 
-###PROVEEDORES
+##PROVEEDORES
 def listarProveedores(request):
     busqueda = request.GET.get("buscar")
     proveedoresListados = Proveedores.objects.all()
@@ -200,3 +200,5 @@ def eliminarProveedores(request, cedula_prov):
     proveedores.delete()
     messages.success(request, '¡Proveedor Eliminado!')
     return redirect("http://127.0.0.1:8000/gestionProveedores")
+
+#################################################################################################
