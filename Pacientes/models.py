@@ -10,16 +10,16 @@ class Pacientes(models.Model):
     fechaNac = models.DateField(verbose_name='Fecha de Nacimiento')
     direccion = models.CharField(max_length=35)
     lugarNac = models.CharField(max_length=35)
-
-def __str__(self):
+    def __str__(self):
         texto = "{0} {1} ({2})"
         return texto.format(self.nombre, self.apellido, self.cedula)
-    
 class Meta:
     db_table = 'paciente'
     verbose_name = 'Paciente'
     verbose_name_plural = 'Pacientes'
     ordering = ['nombre']
+
+######################################################################################
 
 #Proveedores
 class Proveedores(models.Model):
@@ -29,17 +29,15 @@ class Proveedores(models.Model):
     apellido_prov = models.CharField(max_length=35)
     direccion_prov = models.CharField(max_length=35)
     telefono_prov = models.CharField(max_length=35)
-    
-def __str__(self):
-    texto = "{0}, {1}, ({2})"
-    return texto.format(self.nombre_prov, self.apellido_prov, self.cedula_prov)
-
+    def __str__(self):
+        texto = "{0} {1} ({2})"
+        return texto.format(self.nombre_prov, self.apellido_prov, self.cedula_prov)
 class Meta:
     db_table = 'proveedor'
     verbose_name = 'Proveedor'
     verbose_name_plural = 'Proveedores'
     ordering = ['nombre_prov']
-
+#######################################################################################
 
     #Productos
 class Productos(models.Model):
@@ -47,17 +45,15 @@ class Productos(models.Model):
     proveedor = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
     nombrep = models.CharField(max_length=35)
     cantidad = models.CharField(max_length=35)
-    
-def __str__(self):
+    def __str__(self):
         texto = "{0} ({1})"
         return texto.format(self.nombrep, self.codigo)
-
 class Meta:
     db_table = 'producto'
     verbose_name = 'Producto'
     verbose_name_plural = 'Productos'
     ordering = ['nombrep']
-
+###################################################################################
 
 #Exámenes
 class Examenes(models.Model):
@@ -65,16 +61,15 @@ class Examenes(models.Model):
     nombre_examen = models.CharField(max_length=35)
     paciente = models.ForeignKey(Pacientes, null=True, blank=True, on_delete=models.CASCADE)
     producto = models.ForeignKey(Productos, null=True, blank=True, on_delete=models.CASCADE)
-
-
-def __str__(self):
-        return f"{self.nombre_examen} {self.id_examenes}"
-
+    def __str__(self):
+        texto = "{0})"
+        return texto.format(self.nombre_examen)
 class Meta:
     db_table = 'examen'
     verbose_name = 'Examen'
     verbose_name_plural = 'Examenes'
 
+####################################################################################
 
 
 

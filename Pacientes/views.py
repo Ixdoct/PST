@@ -106,7 +106,7 @@ def obtenerProveedores(_request):
 
 def registrarProductos(request):
     codigo=request.POST['txtCodigo']
-    proveedor = Proveedores.objects.get(cedula_prov = request.POST['txtProveedor'])
+    proveedor = Proveedores.objects.get( cedula_prov = request.POST['txtProveedor'],)
     nombrep=request.POST['txtNombre']
     cantidad=request.POST['txtCantidad']
     
