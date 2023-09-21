@@ -3,6 +3,8 @@ from .models import Pacientes, Productos, Proveedores
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
+from django.http import HttpResponse
+import json
 
 # Create your views here.
 TEMPLATE_DIRS = {
@@ -37,7 +39,6 @@ def registrarPacientes(request):
     direccion=request.POST['txtDireccion']
     lugarNac=request.POST['txtLugarNac']
 
-
     pacientes = Pacientes.objects.create(cedula=cedula, nombre=nombre, apellido=apellido, edad=edad, sexo=sexo, fechaNac=fechaNac, direccion=direccion, lugarNac=lugarNac)
     messages.success(request, '¡Paciente Registrado!')
     return redirect('http://127.0.0.1:8000/gestionPacientes')
@@ -55,7 +56,6 @@ def edicionPacientes(request):
     fechaNac=request.POST['txtFechaNac']
     direccion=request.POST['txtDireccion']
     lugarNac=request.POST['txtLugarNac']
-
 
     pacientes = Pacientes.objects.get(cedula=cedula)
     pacientes.cedula = cedula
