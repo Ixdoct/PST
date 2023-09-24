@@ -5,13 +5,29 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.http import HttpResponse
 import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 # Create your views here.
 TEMPLATE_DIRS = {
     'os.path.join(BASE_DIR, "templates")'
 }
 #Inicio
-def index(request):
+def home(request):
+    return render(request, "home.html")
+
+#Horarios
+def horarios(request):
+    return render(request, "horarios.html")
+
+##Logout
+def exit(request):
+    logout(request)
+    return redirect('home')
+
+#Panel de Gestiones
+@login_required
+def gestiones(request):
     return render(request, "index.html")
 
 #PACIENTES
@@ -41,7 +57,7 @@ def registrarPacientes(request):
 
     pacientes = Pacientes.objects.create(cedula=cedula, nombre=nombre, apellido=apellido, edad=edad, sexo=sexo, fechaNac=fechaNac, direccion=direccion, lugarNac=lugarNac)
     messages.success(request, '¡Paciente Registrado!')
-    return redirect('http://127.0.0.1:8000/gestionPacientes')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionPacientes')
 
 def editarPacientes(request, cedula):
     pacientes = Pacientes.objects.get(cedula=cedula)
@@ -70,13 +86,13 @@ def edicionPacientes(request):
 
     messages.success(request, '¡Paciente Actualizado!')
 
-    return redirect('http://127.0.0.1:8000/gestionPacientes')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionPacientes')
 
 def eliminarPacientes(request, cedula):
     pacientes = Pacientes.objects.get(cedula=cedula)
     pacientes.delete()
     messages.success(request, '¡Paciente Eliminado!')
-    return redirect("http://127.0.0.1:8000/gestionPacientes")
+    return redirect("http://127.0.0.1:8000/gestiones/gestionPacientes")
 
 ###################################################################################################
 
@@ -112,7 +128,7 @@ def registrarProductos(request):
     
     productos = Productos.objects.create(codigo=codigo, proveedor=proveedor, nombrep=nombrep, cantidad=cantidad)
     messages.success(request, '¡Producto Registrado!')
-    return redirect('http://127.0.0.1:8000/gestionProductos')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionProductos')
 
 def editarProductos(request, codigo):
     productos = Productos.objects.get(codigo=codigo)
@@ -120,26 +136,24 @@ def editarProductos(request, codigo):
 
 def edicionProductos(request):
     codigo=request.POST['txtCodigo']
-    proveedor=request.POST['txtProveedor']
     nombrep=request.POST['txtNombre']
     cantidad=request.POST['txtCantidad']
 
     productos = Productos.objects.get(codigo=codigo)
     productos.codigo = codigo
-    productos.proveedor = proveedor
     productos.nombrep = nombrep
     productos.cantidad = cantidad
     productos.save()
 
     messages.success(request, '¡Producto Actualizado!')
 
-    return redirect('http://127.0.0.1:8000/gestionProductos')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionProductos')
 
 def eliminarProductos(request, codigo):
     productos = Productos.objects.get(codigo=codigo)
     productos.delete()
     messages.success(request, '¡Producto Eliminado!')
-    return redirect("http://127.0.0.1:8000/gestionProductos")
+    return redirect("http://127.0.0.1:8000/gestiones/gestionProductos")
 
 ##################################################################################################
 
@@ -168,7 +182,7 @@ def registrarProveedores(request):
 
     proveedores = Proveedores.objects.create(cedula_prov=cedula_prov, nombre_prov=nombre_prov, apellido_prov=apellido_prov, direccion_prov=direccion_prov, rif=rif, telefono_prov=telefono_prov)
     messages.success(request, '¡Proveedor Registrado!')
-    return redirect('http://127.0.0.1:8000/gestionProveedores')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionProveedores')
 
 def editarProveedores(request, cedula_prov):
     proveedores = Proveedores.objects.get(cedula_prov=cedula_prov)
@@ -193,12 +207,12 @@ def edicionProveedores(request):
 
     messages.success(request, '¡Proveedor Actualizado!')
 
-    return redirect('http://127.0.0.1:8000/gestionProveedores')
+    return redirect('http://127.0.0.1:8000/gestiones/gestionProveedores')
 
 def eliminarProveedores(request, cedula_prov):
     proveedores = Proveedores.objects.get(cedula_prov=cedula_prov)
     proveedores.delete()
     messages.success(request, '¡Proveedor Eliminado!')
-    return redirect("http://127.0.0.1:8000/gestionProveedores")
+    return redirect("http://127.0.0.1:8000/gestiones/gestionProveedores")
 
 #################################################################################################

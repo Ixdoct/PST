@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" class="h-100"
+
+{% load static %}>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CEDIS C.A</title>
+
+<body> 
+    <li><a href={% url 'home' %}>Inicio</a></li>
+    <li><a href={% url 'horarios' %}>Horarios</a></li>
+    <li><a href={% url 'gestiones' %}>Gestiones</a></li>
+    {% if request.user.is_authenticated %}
+        <li><a href={% url 'exit' %}>Cerrar Sesión</a></li>
+        {% else %}
+        <li><a href={% url 'login' %}>Iniciar Sesión</a></li>
+        {% endif %}
+    
+    {% block content %}{% endblock %}
+
+    {% if request.user.is_authenticated %}
+        <li><a  href={% url 'exit' %}>Cerrar Sesión</a></li>
+    {% endif %}
+
+    </body>
+</html>
