@@ -20,6 +20,10 @@ def home(request):
 def horarios(request):
     return render(request, "horarios.html")
 
+#Acerca de Nosotros
+def acd(request):
+    return render(request, "acd.html")
+
 ##Logout
 def exit(request):
     logout(request)

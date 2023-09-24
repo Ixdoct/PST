@@ -7,6 +7,9 @@ urlpatterns = [
     ##Horarios
     path('horarios/', views.horarios, name="horarios"),
 
+    ##Horarios
+    path('acd/', views.acd, name="acd"),
+
     ##Logout
     path('exit/', views.exit, name="exit"),
 
