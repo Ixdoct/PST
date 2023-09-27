@@ -1,7 +1,39 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="es"
+{% load static %}>
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios</title>
+    <link rel="stylesheet" href="{% static 'css/hora.css' %}">
+</head>
 
-<h3>Horarios</h3>
+<header>
 
-{% endblock %}
+    <h2>
+        <a class="in" href="{% url 'home' %}"> Inicio </a>
+    </h2>
+</header>
+
+<body>
+    <div class="menu-container">
+
+
+        <h3> Horarios </h3>
+
+        <div class="content">
+
+            <p> Lunes 8:00am a 4:00pm </p>
+
+        </div>
+        
+
+    </div>
+</body>
+
+
+</html>
+
+
+

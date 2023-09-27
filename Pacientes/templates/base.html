@@ -2,26 +2,206 @@
 <html lang="es" class="h-100"
 
 {% load static %}>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CEDIS C.A</title>
+    <link rel="stylesheet" href= "{% static "css/style.css" %}">
+</head>
 
 <body> 
-    <li><a href={% url 'home' %}>Inicio</a></li>
-    <li><a href={% url 'horarios' %}>Horarios</a></li>
-    <li><a href={% url 'gestiones' %}>Gestiones</a></li>
-    {% if request.user.is_authenticated %}
-        <li><a href={% url 'exit' %}>Cerrar Sesión</a></li>
-        {% else %}
-        <li><a href={% url 'login' %}>Iniciar Sesión</a></li>
-        {% endif %}
+
+    <header class="header"> 
+
+        <div class="menu container">
+            
+            <input type="checkbox" id="menu" />
+            <label for="menu">
+                <img src="imag/menu.png" class="menu-icono" alt="">
+            </label>
+            <nav class="barranav">
+                <ul>
+                    <li><a href={% url 'home' %}>Inicio</a></li>
+                    <li><a href={% url 'horarios' %}>Horarios</a></li>
+                    <li><a href={% url 'gestiones' %}>Gestiones</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href={% url 'exit' %}>Cerrar Sesión</a></li>
+                        {% else %}
+                        <li><a href={% url 'login' %}>Iniciar Sesión</a></li>
+                        {% endif %}
+                    
+                    {% block content %}{% endblock %}
+                
+                </ul>
+            </nav>
+        </div>
+        <div class="header-content container">
+
+            {% if request.user.is_authenticated %}
+            
+            <p class="lead">{% if request.user.is_authenticated %}Bienvenido {{ user.username | upper }}. {% endif %}</p>
+            
+            {% else %}
+            <p>
+                Bienvenidos!
+            </p>
+            {% endif %}
+
+            <h1> CEDIS C.A </h1>
+            <p>Siempre siendo líderes en el apoyo al diagnóstico clínico profesional, conformado por un 
+                equipo de profesionales y trabajando siempre en la búsqueda
+                 de la excelencia a través de un servicio fiable, eficiente y de calidad.
+            </p>
+            
+        </div>
+    </header>
+
+       
+    <section class="Salud-coffe">
+
+        <img class="salud-coffe-img" src="#" alt="">
+
+        <div class="Salud-content container">
+
+            <h2>
+                ¿Quienes Somos?
+            </h2>
+
+            <p class="txt-p">
+                 Un Laboratorio de vanguardia a nivel Regional, ofrecer una alternativa para el diagnóstico con información válida y
+                 oportuna sobre la ocurrencia de enfermedades, así como sus factores condicionantes, para la toma de decisiones y 
+                la ejecución de acciones de prevención y control como un puntal para mejorar la calidad de vida de la ciudadanía en general.
+            </p>
+
+            <div class="salud-coffe-group">
+
+                <div class="salud-coffe-1">
+
+                    <img src="#" alt="">
+                    
+                    <p>
+                        Responsabilidad en nuestros procedimientos.
+                    </p>
+                </div>
     
-    {% block content %}{% endblock %}
+                <div class="salud-coffe-1">
+                    <img src="#" alt="">
+                   
+                    <p>
+                        Excelencia en nuestros servicios.
+                    </p>
+                </div>
+    
+                <div class="salud-coffe-1">
+                    <img src="#" alt=""> 
+                    
+                    <p>
+                        Personal médico y técnico calificado.
+                    </p>
+                </div>
+            </div>
+           
 
-    {% if request.user.is_authenticated %}
-        <li><a  href={% url 'exit' %}>Cerrar Sesión</a></li>
-    {% endif %}
+        </div>
 
+    </section>
+
+
+    <main class="Servicios">
+
+        <div class="servicios-content container">
+
+            <h2> Servicios que ofrecemos </h2>
+
+            <div class="servicios-group">
+
+                <div class="services-1">
+                    <img src="#" alt="">
+                    <h3> Servicio: </h3>
+
+                    <p> Hematologia completa </p>
+                    <p> Quimica Sanguinea </p>
+                    <p> Examen de orina </p>
+                </div>
+
+                <div class="services-1">
+                    <img src="#" alt="">
+                    <h3> Servicio: </h3>
+                    <p> Examen de heces </p>
+                    <p> Marcadores Tumorales</p>
+                    <p> Inmunoserologia </p>
+                </div>
+
+                <div class="services-1">
+                    <img src="#" alt="">
+                    <h3> Servicio:</h3>
+                    <p> Perfiles Hormonales </p>
+                    <p>Prueba de embarazo</p>
+                    <p> Otros. </p>
+                </div>
+            </div>
+
+            
+        </div>
+    </main>
+
+    <section class="general">
+
+        <div class="general-1">
+            <h3> Ubicacion  </h3>
+            <p class="p-general">
+                Avenida principal de la cruz,
+                centro comercial Mini-Mini, local 2, Maturín 6201, Monagas
+                 
+            </p>
+            <a href="#" class="btn-1"> Informacion </a>
+        </div>
+
+        <div class="general-2"> </div>
+    </section>
+
+    <section class="general">
+
+        <div class="general-3"> </div>
+
+        <div class="general-1">
+            <h2>lorem dsjk</h2>
+            <p class="p-general">
+                Lorem ipsum, dolor sit amet
+                 consectetur adipisicing elit. Voluptas alias ad inventore deleniti 
+               
+            </p>
+            <a href="#" class="btn-1"> Informacion</a>
+        </div>
+    </section >
+
+    <footer class="footer">
+        <div class="footer-content container">
+
+            <div class="link">
+                <h3> Contactos. </h3>
+                <ul>
+                    
+                    <li><a href="#"> 0424-905-1134 </a></li>
+                    <li><a href="#"> 0424-913-6761 </a></li>
+                    
+                </ul>
+
+            </div>
+
+            <div class="link">
+                <h3> lorem </h3>
+                <ul>
+                    <li><a href="#"> lorem </a></li>
+                    <li><a href="#"> lorem </a></li>
+                    <li><a href="#"> loorem </a></li>
+                </ul>
+
+            </div>
+
+
+        </div>
+    </footer>
     </body>
 </html>

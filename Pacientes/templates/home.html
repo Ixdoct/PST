@@ -1,19 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <main class="px-3">
-<h3>CEDIS</h3>
+
 {% if request.user.is_authenticated %}
-    <p class="lead">{% if request.user.is_authenticated %}Bienvenido {{ user.username | upper }}, {% endif %}.  online !!!</p>
+
+
+    
+    <p class="lead">{% if request.user.is_authenticated %} {% endif %}. </p>
 
     {% else %}
 
-    <p class="lead">Nuestra empresa se especializa el estudio, prevención, diagnóstico y tratamiento de las enfermedades de los seres humanos.</p>
+    
 
     {% endif %}
 
     <p class="lead">
-    <a href={% url 'acd' %} class="btn btn-lg btn-secondary fw-bold border-white bg-white">Acerca de Nosotros...</a>
+    <a href={% url 'acd' %} class="btn btn-lg btn-secondary fw-bold border-white bg-white"></a>
     </p>
 </main>
+
+   
 {% endblock %}

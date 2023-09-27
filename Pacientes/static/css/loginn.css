@@ -1,0 +1,68 @@
+body {
+    background-image: url(img/GettyImages-1005715630.jpg);
+    background-size: cover;
+    height: 97.4vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    border: 1px solid #c1c2d12e;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.form h3 {
+    margin-top: 20px;
+    font-family: poppins;
+    font-size: 20px;
+    font-weight: 300;
+    color: #fcfcfc;
+}
+
+.form .login {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+
+.login input, button {
+    margin: 10px;
+    padding: 10px 15px;
+    outline: none;
+    border: none;
+    border-radius: 60px;
+    font-size: 16px;
+}
+
+.login input {
+    background-color: #f4f4f4d8;
+    color: #fff;
+    font-family: poppins;
+    letter-spacing: 1px;
+    text-indent: 35px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 15px;
+}
+
+.login input ::placeholder {
+    font-size: 14px;
+    color: #c0b4b4;
+}
+
+.login button{
+    background-color: #f68f3b;
+    color: #fff;
+    font-size: 17px;
+    font-family: poppins;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 30px;
+}

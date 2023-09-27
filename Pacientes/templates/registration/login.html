@@ -5,23 +5,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CEDIS</title>
+    <title>Iniciar Sesion</title>
+    <link rel="stylesheet" href="{% static "css/loginn.css" %}">
 </head>
 <body>
     
 <form action="" method="post">
-    {% csrf_token %}
-    <h1>Iniciar Sesión</h1>
 
+  <div class="form">
+
+  
+    {% csrf_token %}
+    <h3>Iniciar Sesión</h3>
+
+    <div class="login">
         <input type="text" class="form-control" name="username" id="floatingInput" placeholder="Nombre de Usuario">
-        <label for="floatingInput">Nombre de Usuario</label>
+        
       <br>  
         <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Contraseña">
-        <label for="floatingPassword">Contraseña</label>
-      
+        
       </br>
-    <button type="submit">Iniciar Sesión</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+    <button type="submit">Ingresar</button>
+    </div>
+    </div>
   </form>
 
     </body>
