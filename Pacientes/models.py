@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.constraints import UniqueConstraint
 # Modelos 
 #Pacientes
 class Pacientes(models.Model):
@@ -18,13 +19,16 @@ class Meta:
     verbose_name = 'Paciente'
     verbose_name_plural = 'Pacientes'
     ordering = ['nombre']
+    constraints = [
+            UniqueConstraint(fields=['cedula'], name='cedula')
+        ]
 
 ######################################################################################
 
 #Proveedores
 class Proveedores(models.Model):
     cedula_prov = models.CharField(primary_key=True, max_length=10)
-    rif = models.CharField(max_length=30)
+    rif = models.CharField(max_length=15)
     nombre_prov = models.CharField(max_length=20)
     apellido_prov = models.CharField(max_length=20)
     direccion_prov = models.CharField(max_length=35)
@@ -37,11 +41,15 @@ class Meta:
     verbose_name = 'Proveedor'
     verbose_name_plural = 'Proveedores'
     ordering = ['nombre_prov']
+    constraints = [
+            UniqueConstraint(fields=['cedula_prov'], name='cedula_prov')
+        ]
+
 #######################################################################################
 
     #Productos
 class Productos(models.Model):
-    codigo = models.CharField(primary_key=True, max_length=10)
+    codigo = models.CharField(primary_key=True, max_length=12)
     proveedor = models.ForeignKey(Proveedores, on_delete=models.CASCADE)
     nombrep = models.CharField(max_length=20)
     cantidad = models.CharField(max_length=20)
@@ -53,6 +61,9 @@ class Meta:
     verbose_name = 'Producto'
     verbose_name_plural = 'Productos'
     ordering = ['nombrep']
+    constraints = [
+            UniqueConstraint(fields=['codigo'], name='codigo')
+        ]
 ###################################################################################
 
 #Exámenes

@@ -3,10 +3,9 @@ from .models import Pacientes, Productos, Proveedores
 from django.contrib import messages
 from django.http import JsonResponse
 from django.db.models import Q
-from django.http import HttpResponse
-import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db import IntegrityError
 
 # Create your views here.
 TEMPLATE_DIRS = {
@@ -50,18 +49,25 @@ def listarPacientes(request):
     return render(request, "Pacientes/gestionPacientes.html", {"Pacientes" : pacientesListados})
 
 def registrarPacientes(request):
-    cedula=request.POST['txtCedula']
-    nombre=request.POST['txtNombre']
-    apellido=request.POST['txtApellido']
-    edad=request.POST['txtEdad']
-    sexo=request.POST['txtSexo']
-    fechaNac=request.POST['txtFechaNac']
-    direccion=request.POST['txtDireccion']
-    lugarNac=request.POST['txtLugarNac']
-
-    pacientes = Pacientes.objects.create(cedula=cedula, nombre=nombre, apellido=apellido, edad=edad, sexo=sexo, fechaNac=fechaNac, direccion=direccion, lugarNac=lugarNac)
-    messages.success(request, '¡Paciente Registrado!')
-    return redirect('http://127.0.0.1:8000/gestiones/gestionPacientes')
+    if request.method == 'POST':
+        try:
+            cedula=request.POST['txtCedula']
+            nombre=request.POST['txtNombre']
+            apellido=request.POST['txtApellido']
+            edad=request.POST['txtEdad']
+            sexo=request.POST['txtSexo']
+            fechaNac=request.POST['txtFechaNac']
+            direccion=request.POST['txtDireccion']
+            lugarNac=request.POST['txtLugarNac']
+            pacientes = Pacientes.objects.create(cedula=cedula, nombre=nombre, apellido=apellido, edad=edad, sexo=sexo, fechaNac=fechaNac, direccion=direccion, lugarNac=lugarNac)
+        except IntegrityError:
+            mensaje = 'La clave primaria ya existe'
+            messages.success(request, 'Error: Cédula repetida!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionPacientes', {'mensaje': mensaje})
+        else:
+            messages.success(request, '¡Paciente Registrado!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionPacientes')
+        
 
 def editarPacientes(request, cedula):
     pacientes = Pacientes.objects.get(cedula=cedula)
@@ -125,14 +131,20 @@ def obtenerProveedores(_request):
     return JsonResponse(data)
 
 def registrarProductos(request):
-    codigo=request.POST['txtCodigo']
-    proveedor = Proveedores.objects.get( cedula_prov = request.POST['txtProveedor'],)
-    nombrep=request.POST['txtNombre']
-    cantidad=request.POST['txtCantidad']
-    
-    productos = Productos.objects.create(codigo=codigo, proveedor=proveedor, nombrep=nombrep, cantidad=cantidad)
-    messages.success(request, '¡Producto Registrado!')
-    return redirect('http://127.0.0.1:8000/gestiones/gestionProductos')
+    if request.method == 'POST':
+        try:
+            codigo=request.POST['txtCodigo']
+            proveedor = Proveedores.objects.get( cedula_prov = request.POST['txtProveedor'],)
+            nombrep=request.POST['txtNombre']
+            cantidad=request.POST['txtCantidad']
+            productos = Productos.objects.create(codigo=codigo, proveedor=proveedor, nombrep=nombrep, cantidad=cantidad)
+        except IntegrityError:
+            mensaje = 'La clave primaria ya existe'
+            messages.success(request, 'Error: Código repetido!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionProductos', {'mensaje': mensaje})
+        else:
+            messages.success(request, '¡Producto Registrado!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionProductos')
 
 def editarProductos(request, codigo):
     productos = Productos.objects.get(codigo=codigo)
@@ -177,16 +189,22 @@ def listarProveedores(request):
     return render(request, "Proveedores/gestionProveedores.html", {"Proveedores" : proveedoresListados})
 
 def registrarProveedores(request):
-    cedula_prov=request.POST['txtCedulaProv']
-    rif=request.POST['txtRifProv']
-    nombre_prov=request.POST['txtNombreProv']
-    apellido_prov=request.POST['txtApellidoProv']
-    direccion_prov=request.POST['txtDireccionProv']
-    telefono_prov=request.POST['txtTelefonoProv']
-
-    proveedores = Proveedores.objects.create(cedula_prov=cedula_prov, nombre_prov=nombre_prov, apellido_prov=apellido_prov, direccion_prov=direccion_prov, rif=rif, telefono_prov=telefono_prov)
-    messages.success(request, '¡Proveedor Registrado!')
-    return redirect('http://127.0.0.1:8000/gestiones/gestionProveedores')
+    if request.method == 'POST':
+        try:
+            cedula_prov=request.POST['txtCedulaProv']
+            rif=request.POST['txtRifProv']
+            nombre_prov=request.POST['txtNombreProv']
+            apellido_prov=request.POST['txtApellidoProv']
+            direccion_prov=request.POST['txtDireccionProv']
+            telefono_prov=request.POST['txtTelefonoProv']
+            proveedores = Proveedores.objects.create(cedula_prov=cedula_prov, nombre_prov=nombre_prov, apellido_prov=apellido_prov, direccion_prov=direccion_prov, rif=rif, telefono_prov=telefono_prov)
+        except IntegrityError:
+            mensaje = 'La clave primaria ya existe'
+            messages.success(request, 'Error: Cédula repetida!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionProveedores', {'mensaje': mensaje})
+        else:
+            messages.success(request, '¡Proveedor Registrado!')
+            return redirect('http://127.0.0.1:8000/gestiones/gestionProveedores')
 
 def editarProveedores(request, cedula_prov):
     proveedores = Proveedores.objects.get(cedula_prov=cedula_prov)

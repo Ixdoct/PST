@@ -12,7 +12,7 @@
             <form action="/edicionProductos/" method="POST">{% csrf_token %}
                 <div class="form-group">
                     <input type="text" id="txtCodigo" name="txtCodigo" value="{{productos.codigo}}" class="form-control" placeholder="Código"
-                            minlength="6" maxlength="6" readonly required> 
+                            minlength="6" maxlength="12" readonly required> 
                 </div>
                 <div class="form-group">
                     <input type="text" id="txtProveedor" name="txtProveedor" value="{{productos.proveedor}}" class="form-control" placeholder="Proveedor"
