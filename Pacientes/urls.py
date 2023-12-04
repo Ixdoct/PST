@@ -22,6 +22,7 @@ urlpatterns = [
     path('gestiones/editarPacientes/<cedula>', views.editarPacientes),
     path('edicionPacientes/', views.edicionPacientes),
     path('gestiones/eliminarPacientes/<cedula>', views.eliminarPacientes),
+    path('reportPac/', views.reportePaciente),
     
     ##Productos
     path('gestiones/gestionProductos', views.listarProductos),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('gestiones/editarProductos/<codigo>', views.editarProductos),
     path('edicionProductos/', views.edicionProductos),
     path('gestiones/eliminarProductos/<codigo>', views.eliminarProductos),
+    path('reportProc/', views.reporteProductos),
 
     ##Proveedores
     path('gestiones/gestionProveedores', views.listarProveedores),
@@ -37,6 +39,10 @@ urlpatterns = [
     path('gestiones/editarProveedores/<cedula_prov>', views.editarProveedores),
     path('edicionProveedores/', views.edicionProveedores),
     path('gestiones/eliminarProveedores/<cedula_prov>', views.eliminarProveedores),
+    path('reportProv/', views.reporteProveedores),
+
+    ##Exámenes
+    
 ]
     
 

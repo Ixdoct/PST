@@ -68,10 +68,10 @@ class Meta:
 
 #Exámenes
 class Examenes(models.Model):
-    id_examenes = models.CharField(primary_key=True, max_length=10)
-    nombre_examen = models.CharField(max_length=25)
-    paciente = models.ForeignKey(Pacientes, null=True, blank=True, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Productos, null=True, blank=True, on_delete=models.CASCADE)
+    nro_examen= models.AutoField(primary_key=True)
+    nombre_examen= models.CharField(max_length=20)
+    fecha_examen= models.DateField(verbose_name='Fecha de Examen')
+    paciente= models.ForeignKey(Pacientes, on_delete=models.CASCADE)
     def __str__(self):
         texto = "{0})"
         return texto.format(self.nombre_examen)
@@ -80,7 +80,17 @@ class Meta:
     verbose_name = 'Examen'
     verbose_name_plural = 'Examenes'
 
+
+#1 HEMATOLOGIA
+#class Hematologia(Examenes):
+    # eritrocitos= models.CharField(max_length=20)
+    #hematocrito= models.CharField(max_length=20)
+    #hemoglobina= models.CharField(max_length=20)
+    #leucocitos=  models.CharField(max_length=20)
+    #plaquetas=  models.CharField(max_length=20)  
+    #neutrofilos= models.CharField(max_length=20)
+    #linfocitos=  models.CharField(max_length=20)
+    #eosinofilos= models.CharField(max_length=20)
+    #monocitos= models.CharField(max_length=20)
+
 ####################################################################################
-
-
-

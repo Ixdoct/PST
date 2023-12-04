@@ -7,6 +7,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db import IntegrityError
 
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from reportlab.lib.pagesizes import TABLOID, LETTER
+from datetime import datetime
+from reportlab.lib import colors
+from reportlab.platypus import Table, TableStyle
+from django.http import HttpResponse
+from reportlab.platypus import Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+
 # Create your views here.
 TEMPLATE_DIRS = {
     'os.path.join(BASE_DIR, "templates")'
@@ -104,6 +115,81 @@ def eliminarPacientes(request, cedula):
     messages.success(request, '¡Paciente Eliminado!')
     return redirect("http://127.0.0.1:8000/gestiones/gestionPacientes")
 
+#Reporte
+def reportePaciente(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=CEDIS-reports-pacientes.pdf'
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer,pagesize=TABLOID)
+
+    #Header
+    c.setLineWidth(.3)
+    c.setFont('Helvetica',22)
+    c.drawString(30,750, 'CEDIS')
+
+    c.setFont('Helvetica', 12)
+    c.drawString(30,735, 'Report')
+
+    c.setFont('Helvetica-Bold', 12)
+    now = datetime.now()
+    formatted_date = now.strftime("%d/%m/%Y")
+    c.drawString(650,750, formatted_date)
+    c.line(760,747,600,747)
+
+    c.setFont('Helvetica', 20)
+    c.drawString(70, 700, 'Listado de Pacientes')
+
+    Story = []
+    styles=getSampleStyleSheet()
+    styleBH= styles["Normal"]
+    styleBH.align= 'CENTER'
+    styleBH.fontSize= 10
+    Story.append(Paragraph('C.I', styles["Normal"]))
+    Story.append(Paragraph('NOMBRE', styles["Normal"]))
+    Story.append(Paragraph('APELLIDO', styles["Normal"]))
+    Story.append(Paragraph('SEXO', styles["Normal"]))
+    Story.append(Paragraph('EDAD', styles["Normal"])) 
+    Story.append(Paragraph('FECHA DE NACIMIENTO', styles["Normal"])) 
+    Story.append(Paragraph('DIRECCIÓN', styles["Normal"])) 
+    Story.append(Paragraph('LUGAR DE NACIMIENTO', styles["Normal"])) 
+
+
+    #Datos
+    data = Pacientes.objects.all().values_list('cedula', 'nombre', 'apellido', 'sexo', 'edad', 'fechaNac', 'direccion', 'lugarNac')
+    data_list = [list(row) for row in data]
+
+    table = Table([Story] + data_list, colWidths=[1 * inch, 1 * inch, 1 * inch, 1 * inch, 1 * inch, 1.18110236 * inch, 1.96850394 * inch, 1.96850394 * inch])
+    Story.append(table)
+
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+
+    ]))
+
+    #Add tabla al canvas
+    table.wrapOn(c, 800, 600)
+    table.drawOn(c, 10, 580)
+    Story.append(table)
+    
+    c.showPage()
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
 ###################################################################################################
 
 ##PRODUCTOS
@@ -171,6 +257,76 @@ def eliminarProductos(request, codigo):
     messages.success(request, '¡Producto Eliminado!')
     return redirect("http://127.0.0.1:8000/gestiones/gestionProductos")
 
+#Reporte
+def reporteProductos(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=CEDIS-reports-productos.pdf'
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer,pagesize=LETTER)
+
+    #Header
+    c.setLineWidth(.3)
+    c.setFont('Helvetica',22)
+    c.drawString(30,750, 'CEDIS')
+
+    c.setFont('Helvetica', 12)
+    c.drawString(30,735, 'Report')
+
+    c.setFont('Helvetica-Bold', 12)
+    now = datetime.now()
+    formatted_date = now.strftime("%d/%m/%Y")
+    c.drawString(450,750, formatted_date)
+    c.line(600,747,360,747)
+
+    c.setFont('Helvetica', 20)
+    c.drawString(70, 680, 'Listado de Productos')
+
+    Story = []
+    styles=getSampleStyleSheet()
+    styleBH= styles["Normal"]
+    styleBH.align= 'CENTER'
+    styleBH.fontSize= 10
+    Story.append(Paragraph('CÓDIGO', styles["Normal"]))
+    Story.append(Paragraph('PROVEEDOR', styles["Normal"]))
+    Story.append(Paragraph('NOMBRE', styles["Normal"]))
+    Story.append(Paragraph('CANTIDAD', styles["Normal"]))
+
+    #Datos
+    data = Productos.objects.all().values_list('codigo', 'proveedor', 'nombrep', 'cantidad')
+    data_list = [list(row) for row in data]
+
+    table = Table([Story] + data_list, colWidths=[1.5 * inch, 1.5 * inch, 1.5 * inch, 1.5 * inch])
+    Story.append(table)
+
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+
+    ]))
+
+    #Add tabla al canvas
+    table.wrapOn(c, 800, 600)
+    table.drawOn(c, 40, 600)
+    Story.append(table)
+    
+    c.showPage()
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
 ##################################################################################################
 
 ##PROVEEDORES
@@ -236,5 +392,83 @@ def eliminarProveedores(request, cedula_prov):
     proveedores.delete()
     messages.success(request, '¡Proveedor Eliminado!')
     return redirect("http://127.0.0.1:8000/gestiones/gestionProveedores")
+
+#Reporte
+def reporteProveedores(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename=CEDIS-reports-proveedores.pdf'
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer,pagesize=TABLOID)
+
+    #Header
+    c.setLineWidth(.3)
+    c.setFont('Helvetica',22)
+    c.drawString(30,750, 'CEDIS')
+
+    c.setFont('Helvetica', 12)
+    c.drawString(30,735, 'Report')
+
+    c.setFont('Helvetica-Bold', 12)
+    now = datetime.now()
+    formatted_date = now.strftime("%d/%m/%Y")
+    c.drawString(650,750, formatted_date)
+    c.line(760,747,600,747)
+
+    c.setFont('Helvetica', 20)
+    c.drawString(70, 690, 'Listado de Proveedores')
+
+    Story = []
+    styles=getSampleStyleSheet()
+    styleBH= styles["Normal"]
+    styleBH.align= 'CENTER'
+    styleBH.fontSize= 10
+    Story.append(Paragraph('C.I', styles["Normal"]))
+    Story.append(Paragraph('RIF', styles["Normal"]))
+    Story.append(Paragraph('NOMBRE', styles["Normal"]))
+    Story.append(Paragraph('APELLIDO', styles["Normal"]))
+    Story.append(Paragraph('DIRRECIÓN', styles["Normal"])) 
+    Story.append(Paragraph('TELÉFONO', styles["Normal"])) 
+
+
+    #Datos
+    data = Proveedores.objects.all().values_list('cedula_prov', 'rif', 'nombre_prov', 'apellido_prov', 'direccion_prov','telefono_prov')
+    data_list = [list(row) for row in data]
+
+    table = Table([Story] + data_list, colWidths=[1 * inch, 1 * inch, 1 * inch, 1 * inch, 2 * inch, 2 * inch])
+    Story.append(table)
+
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+
+    ]))
+
+    #Add tabla al canvas
+    table.wrapOn(c, 800, 600)
+    table.drawOn(c, 70, 600)
+    Story.append(table)
+    
+    c.showPage()
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+#################################################################################################
+
+##Examenes 
+
 
 #################################################################################################
